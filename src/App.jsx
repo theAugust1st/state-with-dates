@@ -5,23 +5,30 @@ function App() {
   const [count,setCount]=useState(0)
   const today = new Date();
   const futureDate = new Date(today.getTime()+(1000*60*60*24*count))
-
   const week = [
     "sunday",
      'monday',
     "Tuesday",
     "wednesday",
-    "thusday",
+    "thursday",
     "Friday",
     "saturday"
   ]
+  function handleStepChange(event) {
+    const value = Number(event.target.value);
+    setStep(value);
+  }
+  function handleClick() {
+    setCount(0);
+    setStep(1);
+  }
   return (
     <div className="App">
       <div className=" steps more">
-        <button className="stepIncrease" onClick={()=>setStep(prev=>prev+1)}>+</button>
-        <p>{step}</p>
-        <button className="stepDecrease" onClick={()=>setStep(prev=>prev-1)}>-</button>
+        <p>Step:{step}</p>
+              <input type="range" min={1} max={10} value={step} onChange={handleStepChange}></input>
       </div>
+
       <div className=" steps one">
         <button className="stepIncrease" onClick={()=>setCount(prev=>prev+step)}>+</button>
         <p>{count}</p>
@@ -30,7 +37,9 @@ function App() {
       <div>
       {count == 0 ? <p>Today is {today.toLocaleDateString()} </p>:<p>{count} days from today is {week[futureDate.getDay()]} {futureDate.toLocaleDateString()}</p>}
       </div>
-
+      <div>
+        <button onClick={handleClick}>Reset</button>
+      </div>
     </div>
   );
 }
